@@ -1,0 +1,44 @@
+# Create  VM1
+resource "azurerm_virtual_machine" "vm1" {
+  name                  = local.vmName[0]
+  location              = var.location[0]
+  resource_group_name   = azurerm_resource_group.rg1.name
+  network_interface_ids = [azurerm_network_interface.vm1_nic1.id]
+  vm_size               = var.vmSize
+
+  delete_os_disk_on_termination    = true
+  delete_data_disks_on_termination = true
+
+  availability_set_id = azurerm_availability_set.availability_set1.id
+
+  storage_os_disk {
+    name              = "${local.vmName[0]}_osdisk"
+    caching           = "ReadWrite"
+    create_option     = "FromImage"
+    managed_disk_type = "Standard_LRS"
+//    managed_disk_type = "StandardSSD_LRS"
+//    managed_disk_type = "Premium_LRS"
+  }
+
+  storage_image_reference {
+    publisher = var.vmImagePublisher
+    offer     = var.vmImageOffer
+    sku       = var.vmImageSku
+    version   = var.vmImageVersion
+  }
+
+  os_profile {
+    computer_name  = local.vmName[0]
+    admin_username = var.rootUsername
+  }
+
+  os_profile_linux_config {
+    disable_password_authentication = true
+    ssh_keys {
+      path     = "/home/${var.rootUsername}/.ssh/authorized_keys"
+      key_data = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDKO3PGVIUJlqT8LAhfMFPfvp8bY13OmXjJg8pdUcCuTKbym5BtqZLw9vmFC5bDaNRR8H7pUAH6hTmNy5Y8LJYeBrfG6J+iYStbiHLRK01Z4AxbrwHBzHL4/+JynLtf5o/djDrjrKWgMrifWvxgvNvPHbNrwxLuvgJvu4CTJ1QrOHzUcgquLB38DiNQ++/QM6+Ite+wvfnhLDL/8PFJ+CZpboDKQwYrZF6mKErza9dNZ5d7tfCNVa4htdfM3Hpgm8xSjBbkYK8DuufJHOwMvYGqtXLu3Ml4H16eChekEJ2YJUBpLPHlqt95S0/hKpcxmv5JG4UgggZMT75f4XgIOKOnByZpeoEdMD822ToeCsAfgCee9mjcf1XiCFz7MKhlZGuB9iZXhxeVqpZv94QoL2JnC1QXhqTtnMzn9HIiNshzHOKCNvMevr1CTHeDw1i/XwHDpyH8PCvXvtNRLsO5NxYABR4pU5coj5H8uALJMfeKI+vBEXscsaayFzN9usBaUXnK0t2EbDNIOgmqvzgXKGZdgY9QmlDvhb09UzWRjG2U9wMLiTve3X+DeLZVLNYIji3b3H7A9kLlC6DEwVCNa06A10bLJXIxL5DEXnfOL+QMaQjBx2dN3A4jeOr46/91lf4U07cEtQjLnCZtbjFzfKfnjmh9fq64vAcKgqflTID54Q=="
+    }
+  }
+
+  tags = local.tags
+}
