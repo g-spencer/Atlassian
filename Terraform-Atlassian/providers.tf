@@ -4,7 +4,7 @@ terraform {
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = ">=2.77.0"
+      version = ">=2.87.0"
 //      version = "~>2.46.1"     # # ~ is the 'pessimistic evaluator', only allowing version increments to the minor version
     }
   }

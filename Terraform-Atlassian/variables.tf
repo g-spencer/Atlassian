@@ -1,13 +1,13 @@
 # Standard resource variables
 
-variable "reverse_fqdn" {
-  type        = string
-  description = "A fully qualified domain name that resolves to this public IP address."
+variable "protocol" {
+  type        = list(string)
+  description = "Protocols to be allowed by NSG. List containing any well-known name of a network protocol, or ‘TCP_port-number’, or ‘UDP_port-number’ if not well-known."
 }
 
-variable "rootsshRSAPublicKey" {
-  type        = string
-  description = "RSA public key for authentication."
+variable "protocolPort" {
+  type        = map(string)
+  description = "Map containing port numbers for the protocols to be allowed by NSG."
 }
 
 variable "rootUsername" {
@@ -136,16 +136,6 @@ variable "location" {
   default     = ["uksouth"]
 }
 
-variable "protocol" {
-  type        = list(string)
-  description = "Protocols to be allowed by NSG. List containing any well-known name of a network protocol, or ‘TCP_port-number’, or ‘UDP_port-number’ if not well-known."
-}
-
-variable "protocolPort" {
-  type        = map(string)
-  description = "Map containing port numbers for the protocols to be allowed by NSG."
-}
-
 variable "role1" {
   type        = string
   description = "Server role. Must be two characters. Name appropriate to role of server, e.g. wb for a webserver, or dc for a domain controller. The name sv can be used for generic servers if no other role name is appropriate."
@@ -235,7 +225,7 @@ variable "serviceReleaseURL" {
 variable "sourceInfo" {
   type        = string
   description = "URL to repository of code used to deploy the resource, or email address if method was manual."
-  default     = "https://dev.azure.com/SIS-Betting/DNSSRV"
+  default     = "https://dev.azure.com/SIS-Betting/Atlassian"
 }
 
 variable "sourcePlatform" {
