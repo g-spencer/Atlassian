@@ -32,8 +32,8 @@ vmPrivateIpAddress = [
   "10.88.0.142"
 ]
 
-vmSize = "Standard_D4s_v4"
-//vmSize = "Standard_D8_v4"
+//vmSize = "Standard_D4s_v4"
+vmSize = "Standard_D8_v4"
 
 // https://siswiki.sis.tv:8090/display/AZURE/Monitoring
 // workspaceId =

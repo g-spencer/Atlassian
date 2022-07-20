@@ -4,7 +4,7 @@ resource "azurerm_network_security_rule" "secrule1" {
   name                        = "${var.serviceName}-${var.role1}_nsg_${var.protocol[0]}-allow-in"
   priority                    = 111
   direction                   = "Inbound"
-  access                      = "Deny"
+  access                      = "Allow"
   protocol                    = "Tcp"
   source_port_range           = "*"
   destination_port_range      = var.protocolPort[var.protocol[0]]
